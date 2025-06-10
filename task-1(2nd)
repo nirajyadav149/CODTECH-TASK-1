@@ -1,0 +1,43 @@
+import os
+
+def create_file(filename, content):
+    with open(filename, 'w') as file:
+        file.write(content)
+    print(f"File '{filename}' created and written to.")
+
+def read_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = file.read()
+            print(f"Contents of '{filename}':\n{data}")
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+
+def append_to_file(filename, content):
+    with open(filename, 'a') as file:
+        file.write(content)
+    print(f"Appended to '{filename}'.")
+
+def file_exists(filename):
+    if os.path.exists(filename):
+        print(f"File '{filename}' exists.")
+    else:
+        print(f"File '{filename}' does not exist.")
+
+def delete_file(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+        print(f"File '{filename}' deleted.")
+    else:
+        print(f"File '{filename}' does not exist. Nothing to delete.")
+
+# --- Demonstration ---
+filename = "example.txt"
+
+create_file(filename, "Hello, world!\n")
+read_file(filename)
+append_to_file(filename, "This is an appended line.\n")
+read_file(filename)
+file_exists(filename)
+delete_file(filename)
+file_exists(filename)
