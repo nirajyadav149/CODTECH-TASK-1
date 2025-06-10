@@ -1,0 +1,78 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+void writeToFile(const std::string& filename, const std::string& data) {
+    std::ofstream outfile(filename); // Open file for writing (overwrites existing content)
+    if (!outfile) {
+        std::cerr << "Error opening file for writing.\n";
+        return;
+    }
+    outfile << data << std::endl;
+    outfile.close();
+    std::cout << "Data written to file.\n";
+}
+
+void appendToFile(const std::string& filename, const std::string& data) {
+    std::ofstream outfile(filename, std::ios::app); // Open file for appending
+    if (!outfile) {
+        std::cerr << "Error opening file for appending.\n";
+        return;
+    }
+    outfile << data << std::endl;
+    outfile.close();
+    std::cout << "Data appended to file.\n";
+}
+
+void readFromFile(const std::string& filename) {
+    std::ifstream infile(filename); // Open file for reading
+    if (!infile) {
+        std::cerr << "Error opening file for reading.\n";
+        return;
+    }
+    std::string line;
+    std::cout << "File contents:\n";
+    while (std::getline(infile, line)) {
+        std::cout << line << std::endl;
+    }
+    infile.close();
+}
+
+int main() {
+    std::string filename = "example.txt";
+    int choice;
+    std::string data;
+
+    while (true) {
+        std::cout << "\nFile Operations Menu:\n";
+        std::cout << "1. Write to file (overwrite)\n";
+        std::cout << "2. Append to file\n";
+        std::cout << "3. Read from file\n";
+        std::cout << "4. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore(); // Clear newline from buffer
+
+        switch (choice) {
+            case 1:
+                std::cout << "Enter data to write: ";
+                std::getline(std::cin, data);
+                writeToFile(filename, data);
+                break;
+            case 2:
+                std::cout << "Enter data to append: ";
+                std::getline(std::cin, data);
+                appendToFile(filename, data);
+                break;
+            case 3:
+                readFromFile(filename);
+                break;
+            case 4:
+                std::cout << "Exiting...\n";
+                return 0;
+            default:
+                std::cout << "Invalid choice. Please try again.\n";
+        }
+    }
+    return 0;
+}
